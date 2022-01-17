@@ -4,12 +4,12 @@ const userScore_span = document.getElementById('user-score');
 const computerScore_span = document.getElementById('computer-score');
 const scoreBoard_div = document.querySelector('.score-board');
 const result_p = document.querySelector('.result > p');
-const rock_div = document.getElementById('r');
-const paper_div = document.getElementById('p');
-const scissors_div = document.getElementById('s');
-const lizard_div = document.getElementById('l');
-const spock_div = document.getElementById('sp');
-
+// const rock_div = document.getElementById('r');
+// const paper_div = document.getElementById('p');
+// const scissors_div = document.getElementById('s');
+// const lizard_div = document.getElementById('l');
+// const spock_div = document.getElementById('sp');
+const choices_div = document.querySelector('.choices');
 
 function getComputerChioce() {
     const choices = ['r', 'p', 's', 'l', 'sp'];
@@ -29,41 +29,38 @@ function smaller(word) {
     return `<span class='smaller'>${word}</span>`
 }
 
+const smallUserWord = smaller('user');
+const smallCompWord = smaller('comp');
+
+function glowingUserChoice(id, addedClass) {
+    document.getElementById(id).classList.add(addedClass);
+    setTimeout(function () {
+        document.getElementById(id).classList.remove(addedClass)
+    }, 450);
+}
+
 function win(userChoice, computerChioce) {
     userScore++;
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
-    const smallUserWord = smaller('user');
-    const smallCompWord = smaller('comp');
     result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} beats ${convertToWord(computerChioce)}${smallCompWord}. You win!`;
-    document.getElementById(userChoice).classList.add('green-glow');
-    setTimeout(function () {
-        document.getElementById(userChoice).classList.remove('green-glow')
-    }, 450);
+    glowingUserChoice(userChoice, 'green-glow');
 };
 
 function lose(userChoice, computerChioce) {
     computerScore++;
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
-    const smallUserWord = smaller('user');
-    const smallCompWord = smaller('comp');
     result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} loses to ${convertToWord(computerChioce)}${smallCompWord}. You lost!`;
-    document.getElementById(userChoice).classList.add('red-glow');
-    setTimeout(function () {
-        document.getElementById(userChoice).classList.remove('red-glow')
-    }, 450);
+    glowingUserChoice(userChoice, 'red-glow');
+
 };
 
 function draw(userChoice, computerChioce) {
-
-    const smallUserWord = smaller('user');
-    const smallCompWord = smaller('comp');
     result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} equals ${convertToWord(computerChioce)}${smallCompWord}. It's draw!`;
-    document.getElementById(userChoice).classList.add('gray-glow');
-    setTimeout(function () {
-        document.getElementById(userChoice).classList.remove('gray-glow')
-    }, 450);
+
+    glowingUserChoice(userChoice, 'gray-glow');
+
 };
 
 function game(userChoice) {
@@ -103,26 +100,23 @@ function game(userChoice) {
     };
 };
 
-function main() {
-    rock_div.addEventListener('click', function () {
-        game('r');
-    });
+// function main() {
+//     rock_div.addEventListener('click', () => game('r'));
+//     paper_div.addEventListener('click', () => game('p'));
+//     scissors_div.addEventListener('click', () => game('s'));
+//     lizard_div.addEventListener('click', () => game('l'));
+//     spock_div.addEventListener('click', () => game('sp'));
 
-    paper_div.addEventListener('click', function () {
-        game('p');
-    });
+// };
 
-    scissors_div.addEventListener('click', function () {
-        game('s');
-    });
-    lizard_div.addEventListener('click', function () {
-        game('l');
-    });
+// main();
 
-    spock_div.addEventListener('click', function () {
-        game('sp');
-    });
+function main (){
 
+choices_div.addEventListener('click', function(e){
+    const div_id = e.target.parentElement.id;
+    game(div_id);
+});
 };
 
 main();
