@@ -10,6 +10,9 @@ const result_p = document.querySelector('.result > p');
 // const lizard_div = document.getElementById('l');
 // const spock_div = document.getElementById('sp');
 const choices_div = document.querySelector('.choices');
+const clearScore_button = document.querySelector('.clearScore');
+
+
 
 function getComputerChioce() {
     const choices = ['r', 'p', 's', 'l', 'sp'];
@@ -120,3 +123,27 @@ choices_div.addEventListener('click', function(e){
 };
 
 main();
+
+
+// Clear the score
+
+clearScore_button.addEventListener('click', function(){
+    UpdateResult();
+    userScore = 0;
+    computerScore = 0;
+    userScore_span.innerHTML = userScore;
+    computerScore_span.innerHTML = computerScore;
+
+});
+
+function UpdateResult(){
+    result_p.innerHTML = 'Сleared!';
+    setTimeout(function(){
+        result_p.innerHTML='Try your luck! Click the button!';
+    },1000);  
+};
+
+
+
+
+
