@@ -165,9 +165,9 @@ function getLocalStorage() {
         userScore: 0,
         computerScore: 0
     };
-    const user = score.userScore;
-    const computer = score.computerScore;
-    userScore_span.innerHTML = user;
-    computerScore_span.innerHTML = computer;
+    userScore = score.userScore;
+    computerScore = score.computerScore;
+    userScore_span.innerHTML = userScore;
+    computerScore_span.innerHTML = computerScore;
 };
 
