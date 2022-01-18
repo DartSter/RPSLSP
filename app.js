@@ -12,7 +12,7 @@ const result_p = document.querySelector('.result > p');
 const choices_div = document.querySelector('.choices');
 const clearScore_button = document.querySelector('.clearScore');
 
-
+window.addEventListener('DOMContentLoaded', getLocalStorage)
 
 function getComputerChioce() {
     const choices = ['r', 'p', 's', 'l', 'sp'];
@@ -114,12 +114,13 @@ function game(userChoice) {
 
 // main();
 
-function main (){
+function main() {
 
-choices_div.addEventListener('click', function(e){
-    const div_id = e.target.parentElement.id;
-    game(div_id);
-});
+    choices_div.addEventListener('click', function (e) {
+        const div_id = e.target.parentElement.id;
+        game(div_id);
+        addToLocalStorage();
+    });
 };
 
 main();
@@ -127,23 +128,46 @@ main();
 
 // Clear the score
 
-clearScore_button.addEventListener('click', function(){
+clearScore_button.addEventListener('click', function () {
     UpdateResult();
     userScore = 0;
     computerScore = 0;
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
+    clearLocalStorage();
 
 });
 
-function UpdateResult(){
+function UpdateResult() {
     result_p.innerHTML = 'Сleared!';
-    setTimeout(function(){
-        result_p.innerHTML='Try your luck! Click the button!';
-    },1000);  
+    setTimeout(function () {
+        result_p.innerHTML = 'Try your luck! Click the button!';
+    }, 1000);
 };
 
 
+// LOCAL STORAGE
 
+function addToLocalStorage() {
+    const score = {
+        userScore,
+        computerScore
+    };
+    localStorage.setItem('score', JSON.stringify(score));
+};
 
+function clearLocalStorage() {
+    localStorage.removeItem('score');
+};
+
+function getLocalStorage() {
+    const score = localStorage.getItem('score') ? JSON.parse(localStorage.getItem('score')) : {
+        userScore: 0,
+        computerScore: 0
+    };
+    const user = score.userScore;
+    const computer = score.computerScore;
+    userScore_span.innerHTML = user;
+    computerScore_span.innerHTML = computer;
+};
 
